@@ -1,12 +1,9 @@
-import './style.css'
-import { createClient } from '@supabase/supabase-js'
-
 // Configuration de Supabase
 const supabaseUrl = "https://ezxhzjuvpnxfodcsbdqd.supabase.co"
 const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6eGh6anV2cG54Zm9kY3NiZHFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg5NDc5MDAsImV4cCI6MjA1NDUyMzkwMH0.IBACopZNg494lW8OwyaKhwJ3-CMQvF7tUm5wopW9xtA"
 
 // Initialisation du client Supabase
-const supabase = createClient(supabaseUrl, supabaseAnonKey)
+const supabase = supabaseClient.createClient(supabaseUrl, supabaseAnonKey)
 
 // Fonction pour récupérer les participants
 async function getParticipants() {
