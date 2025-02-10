@@ -4,13 +4,46 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Liste des participants - Supabase</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="./src/style.css">
+    <!-- Ajout de la dernière version de Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
   </head>
   <body>
     <div id="app">
       <h1>Liste des participants</h1>
       <pre id="participants">Chargement...</pre>
     </div>
-    <script src="./src/main.js"></script>
+    <script>
+      // On met le code directement dans l'index.html pour éviter les problèmes de modules
+      const supabaseUrl = "https://ezxhzjuvpnxfodcsbdqd.supabase.co"
+      const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6eGh6anV2cG54Zm9kY3NiZHFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg5NDc5MDAsImV4cCI6MjA1NDUyMzkwMH0.IBACopZNg494lW8OwyaKhwJ3-CMQvF7tUm5wopW9xtA"
+
+      // Initialisation du client Supabase
+      const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey)
+
+      // Fonction pour récupérer les participants
+      async function getParticipants() {
+        console.log("Récupération des participants en cours...")
+        
+        try {
+          const { data, error } = await supabase
+            .from('participants')
+            .select('*')
+          
+          if (error) {
+            throw error
+          }
+          
+          console.log("Données récupérées avec succès:", data)
+          document.getElementById("participants").textContent = JSON.stringify(data, null, 2)
+        } catch (error) {
+          console.error("Erreur lors de la récupération des participants:", error.message)
+          document.getElementById("participants").textContent = "Erreur lors du chargement des données: " + error.message
+        }
+      }
+
+      // Appel initial pour charger les participants
+      getParticipants()
+    </script>
   </body>
 </html>
