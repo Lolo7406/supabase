@@ -12,46 +12,13 @@
     <div id="app">
       <h1>Liste des participants</h1>
       <pre id="participants">Chargement...</pre>
+      
+      <h2>Total Wallets (tickets &lt; 100000)</h2>
+      <pre id="walletTotals">Chargement...</pre>
+      
+      <h2>Total Référals (tickets ≥ 100000)</h2>
+      <pre id="referals">Chargement...</pre>
     </div>
-    <script>
-      // Configuration de Supabase
-      const supabaseUrl = "https://ezxhzjuvpnxfodcsbdqd.supabase.co"
-      const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6eGh6anV2cG54Zm9kY3NiZHFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg5NDc5MDAsImV4cCI6MjA1NDUyMzkwMH0.IBACopZNg494lW8OwyaKhwJ3-CMQvF7tUm5wopW9xtA"
-
-      // Initialisation du client Supabase
-      const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey, {
-        auth: {
-          autoRefreshToken: true,
-          persistSession: true,
-          detectSessionInUrl: false
-        }
-      })
-
-      // Fonction pour récupérer les participants
-      async function getParticipants() {
-        console.log("Récupération des participants en cours...")
-        
-        try {
-          const { data, error } = await supabase
-            .from('participants')
-            .select('*')
-          
-          if (error) {
-            throw error
-          }
-          
-          console.log("Données récupérées avec succès:", data)
-          document.getElementById("participants").textContent = JSON.stringify(data, null, 2)
-        } catch (error) {
-          console.error("Erreur lors de la récupération des participants:", error.message)
-          document.getElementById("participants").textContent = "Erreur lors du chargement des données: " + error.message
-        }
-      }
-
-      // Appel initial pour charger les participants une fois que le DOM est chargé
-      document.addEventListener('DOMContentLoaded', () => {
-        getParticipants()
-      })
-    </script>
+    <script src="./src/main.js"></script>
   </body>
 </html>
