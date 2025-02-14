@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://ezxhzjuvpnxfodcsbdqd.supabase.co https://cdn.jsdelivr.net 'unsafe-inline'">
+    <title>Total Référals - Supabase</title>
+    <link rel="stylesheet" href="./src/style.css">
+    <!-- Chargement de Supabase via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Total Référals (ticket_number ≥ 100000)</h1>
+      <pre id="referals">Chargement...</pre>
+    </div>
+    <script>
+      // Configuration de Supabase
+      const supabaseUrl = "https://ezxhzjuvpnxfodcsbdqd.supabase.co";
+      const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6eGh6anV2cG54Zm9kY3NiZHFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg5NDc5MDAsImV4cCI6MjA1NDUyMzkwMH0.IBACopZNg494lW8OwyaKhwJ3-CMQvF7tUm5wopW9xtA";
+
+      // Initialisation du client Supabase via l'objet global
+      const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+      // Fonction pour récupérer les totaux de références depuis la vue referals
+      async function getReferals() {
+        console.log("Récupération des totaux de referals...");
+        try {
+          const { data, error } = await supabase
+            .from('referals')
+            .select('*');
+
+          if (error) throw error;
+
+          console.log("Données referals récupérées avec succès:", data);
+          document.getElementById("referals").textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+          console.error("Erreur lors de la récupération des referals:", error.message);
+          document.getElementById("referals").textContent = "Erreur lors du chargement des referals: " + error.message;
+        }
+      }
+
+      // Chargement dès que le DOM est prêt
+      document.addEventListener('DOMContentLoaded', () => {
+        getReferals();
+      });
+    </script>
+  </body>
+</html>
